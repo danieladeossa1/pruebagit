@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de notas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <style>
+        form {
+            width: 80%;
+            text-align: right;
+        }
+
+        table {
+            width: 100%;
+
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 style="text-align:center;">Sistema de Notas</h1>
+        <form>
+            <div class="row">
+                <div class="col">
+                    <label for="ident">Identificación</label>
+                </div>
+                <div class="col">
+                    <input type="text" id="ident" name="ident" class="form-control" placeholder="identificación"
+                        autocomplete="off">
+                    <span style="color:red" id="identmess" autocomplete="off"></span>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <label for="fullname">Nombre completo</label>
+                </div>
+                <div class="col">
+                    <input type="text" id="fullname" name="fullname" class="form-control" placeholder="Nombre completo"
+                        autocomplete="off">
+                    <span style="color:red" id="fullnamemess" autocomplete="off"></span>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <label for="course">Asignatura</label>
+                </div>
+                <div class="col">
+                    <select name="course" id="course" class="form-control">
+                        <option value="" selected disabled>Seleccione una asiganatura</option>
+                        <option value="maths">Matematicas</option>
+                        <option value="spanish">Español</option>
+                        <option value="english">Inglés</option>
+                    </select>
+                    <span style="color:red" id="coursemess">&nbsp;</span>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <label for="note1">Nota Momento 1 (30%)</label>
+                </div>
+                <div class="col">
+                    <input type="number" id="note1" name="note1" class="form-control" placeholder="Nota 1">
+                    <span style="Color: red; background:pink" id="note1mess"></span>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <label for="note2">Nota Momento 2 (35%)</label>
+                </div>
+                <div class="col">
+                    <input type="number" id="note2" name="note2" class="form-control" placeholder="Nota 2">
+                    <span style="Color: red; background:pink" id="note2mess"></span>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <label for="note3">Nota Momento 3 (35%)</label>
+                </div>
+                <div class="col">
+                    <input type="number" id="note3" name="note3" class="form-control" placeholder="Nota 3">
+                    <span style="Color: red; background:pink" id="note3mess"></span>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <label for="Definitive">Definitiva</label>
+                </div>
+                <div class="col">
+                    <input type="text" id="definitive" name="definitive" class="form-control" placeholder="Definitiva" readonly>
+                    <span style="Color: red; background:pink" id="definitivemess"></span>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <label for="Observation">Observación</label>
+                </div>
+                <div class="col">
+                    <input type="text" id="observation" name="observation" class="form-control"
+                        placeholder="Observación">
+                    <span style="Color: red; background:pink" id="observationmess"></span>
+                </div>
+                <div>
+                    <span style="Color: red; background:pink" id="messsave"></span>
+                </div>
+            </div>
+            
+
+            <div class="row mt-5">
+                <div class="col">
+                    <button type="button" class="btn btn-primary" id="btnsave">Calcular/Guardar</button>
+                    <button type="button" class="btn btn-warning" id="btnclean">Limpiar</button>
+                    <button type="button" class="btn btn-success" id="btnsearch">Buscar</button>
+                    <button type="button" class="btn btn-dark" id="btnlist">Listar</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- En el siguiente div se creará un nodo(s) para la tabla (boton listar)-->
+        <div id="listado" style="margin-top: 10px;"></div>
+    </div>
+    <script>
+        let datosemp = [];
+        // Referenciar todos los elementos que tiene id
+        let ident = document.getElementById('ident');
+        let identmess = document.getElementById('identmess');
+        let fullname = document.querySelector('#fullname');
+        let fullnamemess = document.getElementById('fullnamemess');
+        let course = document.querySelector('#course');
+        let coursemess = document.querySelector('#coursemess');
+        let note1 = document.getElementById('note1');
+        let note1mess = document.getElementById('note1mess');
+        let note2 = document.getElementById("note2");
+        let note2mess = document.getElementById('note2mess');
+        let note3 = document.getElementById("note3");
+        let note3mess = document.getElementById('note3mess');
+        let btnsave = document.getElementById('btnsave');
+        let btnsearch = document.getElementById('btnsearch');
+        let btnlist = document.getElementById('btnlist');
+        let messsave = document.getElementById('messsave');
+        let btnclean = document.getElementById('btnclean');
+        let definitive = document.getElementById('definitive');
+        let definitivemess = document.getElementById('definitivemess');
+        let observation = document.getElementById('observation');
+        let observationmess = document.getElementById('observationmess');
+        const listado = document.querySelector('#listado');
+
+        function cleanData() {
+            ident.value = "";
+            fullname.value = "";
+            course.value = "";
+            note1.value = "";
+            note2.value = "";
+            note3.value = "";
+            definitive.value = "";
+            observation.value = "";
+            ident.focus();
+        }
+
+        // Generar los eventos de los elementos referenciados
+        ident.addEventListener('focus', () => {
+            // Enviar un texto al elemento referenciado identmess
+            identmess.textContent = "Ingrese la identificación"
+        })
+        ident.addEventListener('blur', () => {
+            identmess.textContent = ""
+        })
+        fullname.addEventListener('focus', () => {
+            // Enviar un texto al elemento referenciado identmess
+            fullnamemess.textContent = "Ingrese el nombre completo"
+        })
+        fullname.addEventListener('blur', () => {
+            fullnamemess.textContent = ""
+        })
+
+        note1.addEventListener('focus', () => {
+            // Enviar un texto al elemento referenciado identmess
+            note1mess.textContent = "Ingrese la nota 1"
+        })
+        note1.addEventListener('blur', () => {
+            note1mess.textContent = " "
+        })
+        note2.addEventListener('focus', () => {
+            // Enviar un texto al elemento referenciado identmess
+            note2mess.textContent = "Ingrese la nota 2"
+        })
+        note2.addEventListener('blur', () => {
+            note2mess.textContent = " "
+        })
+        note3.addEventListener('focus', () => {
+            // Enviar un texto al elemento referenciado identmess
+            note3mess.textContent = "Ingrese la nota 3"
+        })
+        note3.addEventListener('blur', () => {
+            note3mess.textContent = " "
+        })
+
+        async function showAllUsers(){
+            messsave.textContent="Cargando datos..."
+            setTimeout(() => {
+                messsave.textContent="El estudiante fue guardado correctamente"
+            }, 4000);
+        }
+
+        //Evento de los botones
+        btnsave.addEventListener('click', () => {
+
+            if (note1.value > 0 && note1.value <= 5) {
+                if (note2.value > 0 && note2.value <= 5) {
+                    if (note3.value > 0 && note3.value <= 5) {
+                        // Chequear cada input que no estén vacíos
+                        if (ident.value != "") {
+                            if (fullname.value != "") {
+                                if (course.value != "") {
+
+                                    definitive.value = (parseFloat(note1.value * 1.5 / 5) + parseFloat(note2.value * 1.75 / 5) + parseFloat(note3.value * 1.75 / 5));
+                                    if (definitive.value >= 3) {
+                                        observation.value = document.getElementById('observation').value = 'Aprueba'
+                                    }
+                                    else {
+                                        if (definitive.value < 2) {
+                                            observation.value = document.getElementById('observation').value = 'Reprueba'
+                                        }
+                                        else {
+                                            observation.value = document.getElementById('observation').value = 'Habilita'
+                                        }
+                                    }
+                                    
+                                    let empFind = datosemp.find(emp => emp.ident == ident.value);
+                                    if (empFind == undefined) {//No encontró la identificación
+
+                                        datosemp.push({ ident: ident.value, fullname: fullname.value, course: course.value, note1: note1.value, note2: note2.value, note3: note2.value, definitive: definitive.value, observation: observation.value })
+                                        console.log(datosemp);
+
+                                        showAllUsers();
+                                        
+                                        if (listado.hasChildNodes()) {
+                                            listado.removeChild(listado.firstElementChild)
+                                        }
+
+                                        setTimeout(() => {
+                                            messsave.textContent = ""
+                                        }, 6000)
+                                    }
+                                    else {
+                                        messsave.textContent = "La identificación ya se encuentra registrada.Inténtelo con otra.."
+                                    }
+                                }
+                                else {
+                                    course.focus();
+                                    coursemess.textContent = "El nombre completo es obligatorio **";
+                                }
+                            }
+                            else {
+                                fullname.focus()
+                                fullnamemess.textContent = "La asigantura es obligatoria **"
+                            }
+                        }
+                        else {
+                            ident.focus();
+                            identmess.textContent = "La identificación es obligatoria **"
+                        }
+                    }
+                    else {
+                        note3.focus()
+                        note3mess.textContent = "Los valores deben estar entre 0 y 5"
+                    }
+
+                }
+                else {
+                    note2.focus()
+                    note2mess.textContent = "Los valores deben estar entre 0 y 5"
+
+                }
+            }
+            else {
+                note1.focus()
+                note1mess.textContent = "Los valores deben estar entre 0 y 5"
+            }
+
+        })
+
+
+        btnclean.addEventListener('click', () => {
+            cleanData()
+            if (listado.hasChildNodes()) {
+                listado.removeChild(listado.firstElementChild)
+            }
+        })
+        btnsearch.addEventListener('click', () => {
+            if (ident.value != "") {
+                let searchident = datosemp.find(student => student.ident == ident.value);
+                if (searchident != undefined) {// la identificación la encontró (ident)
+                    //Asignar los datos del empleado a cada input 
+                    fullname.value = searchident.fullname;
+                    course.value = searchident.course;
+                    note1.value = searchident.note1;
+                    note2.value = searchident.note2;
+                    note3.value = searchident.note3;
+                    definitive.value = parseFloat(parseFloat(note1.value * 1.5 / 5) + parseFloat(note2.value * 1.75 / 5) + parseFloat(note3.value * 1.75 / 5));
+                    observation.value = searchident.observation;
+                }
+                else {
+                    messsave.textContent = "La identificación NO existe. Inténtelo con otra..."
+                }
+            }
+        })
+        btnlist.addEventListener('click', () => {
+            //Verificar si el elemento listado tiene hijos (subnodos)
+            if (!listado.hasChildNodes()) {// sino tiene hijos el elemento
+
+                //Generar elementos de html (nodos)a través del DOM con JavaScript
+                let newTable = document.createElement('table');
+                //Agregar un atributo al elemento creado con newTable -border con html
+                newTable.setAttribute('border', '2');
+                newTable.setAttribute('cellpadding', '0');
+                newTable.setAttribute('cellspacing', '0')
+
+                let newThIdent = document.createElement('th');
+                let newThTextIdent = document.createTextNode('Identificación');
+                let newThFullname = document.createElement('th');
+                let newThTextFullname = document.createTextNode('Nombre Completo');
+                let newThCourse = document.createElement('th');
+                let newThTextCourse = document.createTextNode('Asignatura');
+                let newThNote1 = document.createElement('th');
+                let newThTextNote1 = document.createTextNode('Nota 1');
+                let newThNote2 = document.createElement('th');
+                let newThTextNote2 = document.createTextNode('Nota 2');
+                let newThNote3 = document.createElement('th');
+                let newThTextNote3 = document.createTextNode('Nota 3');
+                let newThDefinitive = document.createElement('th');
+                let newThTextDefinitive = document.createTextNode('Definitiva');
+                
+                
+
+                //Agregar los textos a cada th
+                newThIdent.appendChild(newThTextIdent);
+                newThFullname.appendChild(newThTextFullname);
+                newThCourse.appendChild(newThTextCourse);
+                newThNote1.appendChild(newThTextNote1);
+                newThNote2.appendChild(newThTextNote2);
+                newThNote3.appendChild(newThTextNote3);
+                newThDefinitive.appendChild(newThTextDefinitive);
+                
+
+                //Agregar los th a la tabla
+                newTable.appendChild(newThIdent);
+                newTable.appendChild(newThFullname);
+                newTable.appendChild(newThCourse);
+                newTable.appendChild(newThNote1);
+                newTable.appendChild(newThNote2);
+                newTable.appendChild(newThNote3);
+                newTable.appendChild(newThDefinitive);
+                
+
+                //Recorrer el array datosemp y por cad objeto, se hará una fila y sus td respectivos 
+                datosemp.map(emp => {
+                    let newTr = document.createElement('tr');
+                    let newTdIdent = document.createElement('td');
+                    let newTdTextIdent = document.createTextNode(emp.ident);
+                    let newTdFullname = document.createElement('td');
+                    let newTdTextFullname = document.createTextNode(emp.fullname);
+                    let newTdCourse = document.createElement('td');
+                    let xcourse = ""
+                    switch (emp.course) {
+                        case "math":
+                            xcourse = "Matematicas"
+                            break;
+                        case "spanish  ":
+                            xcourse = "Español"
+                            break;
+                        case "english":
+                            xcourse = "Ingles"
+                            break;
+                    }
+                    let newTdTextCourse = document.createTextNode(xcourse);
+                    let newTdNote1 = document.createElement('td');
+                    let newTdTextNote1 = document.createTextNode(emp.note1);
+                    let newTdNote2 = document.createElement('td');
+                    let newTdTextNote2 = document.createTextNode(emp.note2);
+                    let newTdNote3 = document.createElement('td');
+                    let newTdTextNote3 = document.createTextNode(emp.note3);
+                    let newTdDefinitive = document.createElement('td');
+                    let newTdTextDefinitive = document.createTextNode(emp.definitive);
+                    let newTdObservation = document.createElement('td');
+                   
+
+
+                    //let newTdTextSalary = document.createTextNode(new Intl.NumberFormat ('es-CO').format(emp.salary));
+
+                    //let newTdTextRet = document.createTextNode(emp.salary > 5700000 ? new Intl.NumberFormat ('es-CO').format (emp.salary * 10 / 100) : '');
+
+
+                    //Agregar los textos a sus respectivos td
+                    newTdIdent.appendChild(newTdTextIdent);
+                    newTdFullname.appendChild(newTdTextFullname);
+                    newTdCourse.appendChild(newTdTextCourse);
+                    newTdNote1.appendChild(newTdTextNote1);
+                    newTdNote2.appendChild(newTdTextNote2);
+                    newTdNote3.appendChild(newTdTextNote3);
+                    newTdDefinitive.appendChild(newTdTextDefinitive);
+                    
+
+                    //Agregar los Td a la fila con id listado
+                    newTr.appendChild(newTdIdent);
+                    newTr.appendChild(newTdFullname);
+                    newTr.appendChild(newTdCourse);
+                    newTr.appendChild(newTdNote1);
+                    newTr.appendChild(newTdNote2);
+                    newTr.appendChild(newTdNote3);
+                    newTr.appendChild(newTdDefinitive);
+                   
+
+                    //Agregar la fila a la tabla
+                    newTable.appendChild(newTr)
+                })
+
+                //Agregar la tabla al elemento con id listado
+                listado.appendChild(newTable)
+            }
+
+
+        })
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arreglos con JS</title>
+</head>
+
+<body>
+    <h1>Manejo de Arreglos JS</h1>
+    <script>
+        let nros = [45, 89, 12, 34, 120]
+        //LONGITUD
+        console.log(`La longitud del arreglo es: ${nros.length}`)
+        console.log(nros)
+        //mostrar los arreglos
+        for (i = 0; i < nros.length; i++) {
+            console.log(nros[i] * 2)
+        }
+        //Agregar al final un elemento al arreglo nros 
+        nros.push(456);
+        //Agregar al inicio un elemento al arreglo nros 
+        nros.unshift(888);
+
+        //otra forma de mostrar elementos iterable for of
+        for (let valor of nros) {
+            console.log(valor)
+        }
+        //recorrer el arreglo con un metodo llamado map
+        nros.map(num => console.log(num * -1))
+        //recorre el arreglo con el metodo forEach
+        nros.forEach(valor => console.log(`El valor es: ${valor}`))
+        nros.forEach(numero => {
+            // if (numero % 2 == 0) {
+            //     console.log(numero);
+            // }
+
+            //operador ternario u operador condicional
+            console.log(numero % 2 == 1 ? (numero) : '')
+
+        })
+        //mostrar los numeros impares de la lista nros
+        nros.map(impar => console.log(impar % 2 == 1 ? impar : ''));
+
+        //Variable de tipo objeto for in
+        let vehiculo ={placa:"TIS123",Marca:"Mazda",precio:35000000}
+        console.log('Datos del vehiculo ');console.log(vehiculo)
+        for (veh in vehiculo){
+            console.log(`${veh}: ${vehiculo[veh]}`)
+        }
+
+        //Arreglo de objetos
+        console.log("Arreglo de objetos vehiculo con map - metodo")
+        let vehiculos =[
+        {placa:"TIS123",Marca:"Mazda",precio:35000000},
+        {placa:"UVR789",Marca:"Chevrolet",precio:25000000},
+        {placa:"MLZ741",Marca:"KIA",precio:38000000},
+        ]
+        vehiculos.map(vh=>console.log(`Placa: ${vh.placa},Marca: ${vh.Marca},Precio: ${vh.precio}`));
+        vehiculos.forEach(vh=> console.log(`Placa: ${vh.placa},Marca: ${vh.Marca},Precio: ${vh.precio}`))
+
+        //Metodo filter: permite filtrar objetos y genera otro arreglo
+        let vhmay30 = vehiculos.filter(vh => vh.precio >30000000)
+        vhmay30.map(vh=> console.log(vh.placa+" "+vh.Marca+" "+vh.precio));
+
+
+
+    </script>
+
+</body>
+
+</html>

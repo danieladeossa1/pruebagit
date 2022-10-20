@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Callbacks - JS</title>
+</head>
+
+<body>
+    <h1>Manejo de Callbacks con JS</h1>
+    <script>
+        function saludar(nombre) {
+            alert('Hola ' + nombre)
+        }
+
+        let bienvenida = (username) => console.log('Bienvenid@ ' + username)
+        // saludar ('pepito ')
+        // saludar ('Maria Gonzalez ')
+        //Funcion flecha
+        // let saludar1=(nombre) => alert('Bienvenido '+nombre);
+        // saludar ('Justinanio Munera')
+        // const saludar2=function(nombre){alert ('Enhorabuena '+nombre)};
+        // //hacer peticion de datos por teclado en archivo html
+        // let mnombre = prompt("Ingrese el nombre");
+        // saludar2(mnombre);
+
+        function funcionCallback(mifuncionCallback) {
+            let minombre = prompt('Ingrese el nombre del usuario ');
+            mifuncionCallback(minombre)
+        }
+        //Sin parametros 
+        let Bienvenida1 = () => console.log(`Bienvenido al sistema`)
+        //ejecutar funcion de callback
+        // funcionCallback(saludar)
+        // funcionCallback(bienvenida)
+        // funcionCallback(Bienvenida1)
+
+        //Delay - proceso de las instrlos console es sincronico y el del setTimeout asincronico
+        // console.log('Instrucción 1. Espere. por favor...')
+        // setTimeout(()=>{
+        //     console.log('El servidor ha generado una respuesta... ');
+        // },5000)
+        // console.log('Instrucción 2...')
+        // console.log('Instrucción 3...')
+
+        function servidor() {
+            console.log("El servidor ha devuelto una informacion...")
+        }
+
+        function fcallback(fn) {
+            setTimeout(() => {
+                fn()
+            }, 3000)
+            console.log("Espere por favor, conectando con el servidor...")
+        }
+        //Ejecutar la funcion fcallback
+        // fcallback(servidor)
+        // fcallback(bienvenida)
+
+        //invocar la funcion callback con funcion flecha y el callbak con el codigo que se desee, sin tener que invocar una funcion (cuando esta no existe)
+        // fcallback(() =>{
+        //     console.log("Los datos del empleado no existen...")
+        // })
+
+        fcallback(()=>document.write ("El Usuario con identif 123 no esta registrado..."));
+
+    </script>
+
+</body>
+
+</html>

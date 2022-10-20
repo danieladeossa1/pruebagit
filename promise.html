@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promesas</title>
+</head>
+
+<body>
+    <h1>Manejo de promesas con JS</h1>
+    <script>
+        //Una promesa (Promise) es un objeto que se retorna para verificar que fue resuelta o rechazada con base en una condición
+        let promesa1 = new Promise((resolve, reject) => {
+            let isAdmin = true;
+            setTimeout(() => {
+
+
+                if (isAdmin) {
+                    resolve("Es un administrador")
+                }
+                else {
+                    reject("No es un administrador")
+                }
+            }, 3000)
+        })
+        //Ejecutar la promesa
+        console.log("Espere, por favor ...")
+        // promesa1
+        //     .then(info => console.log(info))
+        //     .then(info => console.log("Datos recuperados correctamente"))
+        //     .catch(error => console.log(error))
+
+        //Generar una promesa (asincrona) que permita leer un usuario y contraseña, si el ususario es pperez y contraseña 111; emitir un mensaje que inidique que el usuario es valido, de lo contrario el asuario no es valido
+
+
+        // console.log("Espere, buscando usuario")
+        // login
+        //     .then(data => console.log(data))
+        //     .catch(error2 => console.log(error2))
+
+        //arreglo de objetos
+        let users = [
+            { username: "pperez", name: 'Pedro Perez', password: '111', rol: 1 },
+            { username: "ftal", name: 'Fulano de Tal', password: '222', rol: 2 },
+            { username: "ptorres", name: 'Peranito Torres', password: '111', rol: 1 },
+        ]
+        function PromiseSearchUser(user, pass) {
+            return new Promise((resolve, reject) => {
+                let findUser = users.find(usr => usr.username == user && usr.password == pass)
+
+                //Chequear si la variable findUser quedo con informacion
+                if (findUser != undefined) {//Lo encontro
+                    resolve(findUser)
+                }
+                else {
+                    reject("Usuario y/o contraseña INVALIDOS")
+                }
+            })
+        }
+        // let username = prompt("Ingrese usuario");
+        // let password = prompt("Ingrese contraseña");
+        // //Ejecutar la promesa promiseSearchUser
+        // PromiseSearchUser(username, password)
+        //     .then(data => {
+        //         // console.log(data)
+        //         if (data.rol == 1) {
+        //             console.log(`${data.name} Es un administrador`)
+        //         }
+        //         else{
+        //             console.log(`${data.name} NO es un administrador`)
+        //         }
+        //     })
+        //     .catch(errordata => console.log(errordata))
+
+        //Promesas asincronas
+        function SerachUser(user, passw) {
+
+            let userFind = users.find(usr => usr.username == user && usr.password == passw);
+            return userFind
+
+        }
+        //Crear la funcion asincrona
+        async function serachServerUser(username, password) {
+            let userf = await SerachUser(username, password);
+            console.log("Buscando el usuario")
+            setTimeout(() => {
+                if (userf != undefined) {
+                    //Desesturar el objeto userf
+                    const { username, name, password, rol } = userf
+                    console.log(userf)
+                    console.log(`El nombre del usuario es: ${name} y el ususario ${usermane}`)
+                }
+                else {
+                    console.log("Usuario no hallado...")
+                }
+            }, 3000)
+
+        }
+        //Ejecutar lafuncion asincrona
+        // let usermane=prompt("Ingrese nombre de usuario");
+        // let password=prompt("Ingrese la contraseña del usuario")
+        // serachServerUser(usermane,password);
+
+        // //Generar funciones asincronas para listar:
+        // 1.Todos los usuarios
+        // 2.Los usuarios administradores (rol=1)
+
+        //solución punto 1
+        function allUsers() {
+            return users;
+        }
+        async function showAllusers() {
+
+            let allUsers1 = await allUsers();
+            console.log("Recuperando todos los usuarios")
+            setTimeout(() => {
+                allUsers1.map(user => {
+                    //destructurar
+                    const {username, name } = user
+                    // console.log(user.username)
+                    // console.log(user.name)
+                    console.log(username)
+                    console.log(name)
+                })
+            }, 2000)
+        }
+        //Utilizar la funcion showAllUsers
+        // showAllusers()
+
+        //Solución Punto 2
+        function userAdministrators(){
+            let userAdmins= users.filter(user=> user.rol==1);
+            return userAdmins
+        }
+        async function showAdministrators(){
+            let myadmins =await userAdministrators();
+            myadmins.forEach(usr=>{
+                console.log(usr.name + " "+ usr.username)
+            })
+        }
+        //Ejecutar la funcion asincrona
+        showAdministrators();
+    </script>
+
+
+</body>
+
+</html>

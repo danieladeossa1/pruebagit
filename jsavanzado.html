@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Avanzado</title>
+</head>
+
+<body>
+    <h1>Manejo de JavaScript Avanzado</h1>
+    <script>
+        console.log("Hola mundo desde la consola del navegador ...");
+        document.write("Hola desde el cuerpo de la pagina");
+        //Funciones tradicionales
+        function calcular(valor1, valor2, operador) {
+            let resultado = 0
+            switch (operador) {
+                case "+":
+                    resultado = valor1 + valor2;
+                    break;
+                case "-":
+                    resultado = valor1 - valor2;
+                    break;
+                case "*":
+                    resultado = valor1 * valor2;
+                    break;
+                case "/":
+                    resultado = valor1 / valor2;
+                    break;
+            }
+            return resultado
+        }
+        //Utilizar la función calcular 
+        console.log(calcular(4, 5, "+"))
+        document.write("<br>" + calcular(7, 21, "*"))
+        console.log(calcular(84, 63, "-"))
+        // a la variable miresultado le voy a enviar lo que devuleve una funcion teniendo return
+        let miresultado = calcular (45,15,"/")
+        document.write("<br> El resultado de la division es: " + miresultado)
+        //lo que me devuelva una función lo puedo tomar en una pregunta
+        if(calcular(30,40,"/")<1){
+            console.log(`El resultado de la division es menor que uno: ${calcular(30,40,"/")}}`)
+        }
+        else{
+            console.log("El resultado es superior a 1")
+        }
+        function elevarNumero(base,exponente){
+            return Math.pow(base,exponente)
+        }
+        //Invocar la funcion elevar 
+        console.log (elevarNumero(20,3))
+        //Invocar con una variable
+        let numero = elevarNumero(4,3);
+        console.log (numero);
+
+        function raizNumero(radicando,indice){
+            return Math.pow(radicando, 1 / indice)
+        }
+        //inovcar la funcion raizNumero
+        console.log(raizNumero(4,2))
+        console.log(raizNumero(8,3))
+        console.log(raizNumero(400,8))
+
+    </script>
+</body>
+
+</html>
